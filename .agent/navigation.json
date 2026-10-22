@@ -1,0 +1,615 @@
+{
+  "schema_version": "1.0",
+  "repository": "HA-LG-webOSTV",
+  "identity": {
+    "description": "An alternative implementation of the LG webOS TV integration for Home Assistant with classic availability behavior.",
+    "default_branch": "main",
+    "languages": {
+      "Python": 11
+    },
+    "topics": [],
+    "licence": "MIT License",
+    "file_count": 31
+  },
+  "start_here": {
+    "readme": "README.md",
+    "agents_md": "AGENTS.md",
+    "entry_points": [],
+    "decision_records": [],
+    "build_config": [
+      "custom_components/webostv_classic/manifest.json",
+      "hacs.json"
+    ],
+    "source_roots": [
+      "custom_components"
+    ]
+  },
+  "documentation": [
+    {
+      "path": ".github/copilot-instructions.md",
+      "title": "Copilot instructions — HA-LG-webOSTV",
+      "lines": 37,
+      "headings": [
+        {
+          "level": 2,
+          "text": "What this repo is",
+          "anchor": "what-this-repo-is"
+        },
+        {
+          "level": 2,
+          "text": "Repo shape",
+          "anchor": "repo-shape"
+        },
+        {
+          "level": 2,
+          "text": "Conventions",
+          "anchor": "conventions"
+        },
+        {
+          "level": 2,
+          "text": "Never",
+          "anchor": "never"
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "title": "LG webOS TV Classic",
+      "lines": 83,
+      "headings": [
+        {
+          "level": 2,
+          "text": "Why this integration?",
+          "anchor": "why-this-integration"
+        },
+        {
+          "level": 2,
+          "text": "Installation",
+          "anchor": "installation"
+        },
+        {
+          "level": 3,
+          "text": "HACS (Recommended)",
+          "anchor": "hacs-recommended"
+        },
+        {
+          "level": 3,
+          "text": "Manual Installation",
+          "anchor": "manual-installation"
+        },
+        {
+          "level": 2,
+          "text": "Configuration",
+          "anchor": "configuration"
+        },
+        {
+          "level": 2,
+          "text": "Features",
+          "anchor": "features"
+        },
+        {
+          "level": 2,
+          "text": "Important Notes",
+          "anchor": "important-notes"
+        },
+        {
+          "level": 2,
+          "text": "Differences from Official Integration",
+          "anchor": "differences-from-official-integration"
+        },
+        {
+          "level": 2,
+          "text": "License",
+          "anchor": "license"
+        },
+        {
+          "level": 2,
+          "text": "Credits",
+          "anchor": "credits"
+        }
+      ]
+    }
+  ],
+  "code": {
+    "source_roots": [
+      "custom_components"
+    ],
+    "symbol_source": "repomix (tree-sitter signatures)",
+    "routes": [],
+    "files": [
+      {
+        "path": "custom_components/webostv_classic/__init__.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "CONFIG_SCHEMA",
+            "parent": "",
+            "signature": "CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)"
+          },
+          {
+            "kind": "function",
+            "name": "async_setup",
+            "parent": "",
+            "signature": "async_setup(hass: HomeAssistant, config: ConfigType) -> bool"
+          },
+          {
+            "kind": "function",
+            "name": "async_setup_entry",
+            "parent": "",
+            "signature": "async_setup_entry(hass: HomeAssistant, entry: WebOsTvConfigEntry) -> bool"
+          },
+          {
+            "kind": "function",
+            "name": "async_on_stop",
+            "parent": "",
+            "signature": "async_on_stop(_event: Event) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_unload_entry",
+            "parent": "",
+            "signature": "async_unload_entry(hass: HomeAssistant, entry: WebOsTvConfigEntry) -> bool"
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/config_flow.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "DATA_SCHEMA",
+            "parent": "",
+            "signature": "DATA_SCHEMA = vol.Schema("
+          },
+          {
+            "kind": "class",
+            "name": "FlowHandler",
+            "parent": "",
+            "signature": "class FlowHandler(ConfigFlow, domain=DOMAIN)"
+          },
+          {
+            "kind": "function",
+            "name": "async_get_options_flow",
+            "parent": "FlowHandler",
+            "signature": "async_get_options_flow(config_entry: WebOsTvConfigEntry) -> OptionsFlowHandler"
+          },
+          {
+            "kind": "function",
+            "name": "is_matching",
+            "parent": "FlowHandler",
+            "signature": "is_matching(self, other_flow: Self) -> bool"
+          },
+          {
+            "kind": "class",
+            "name": "OptionsFlowHandler",
+            "parent": "",
+            "signature": "class OptionsFlowHandler(OptionsFlowWithReload)"
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/const.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "DOMAIN",
+            "parent": "",
+            "signature": "DOMAIN = \"webostv_classic\""
+          },
+          {
+            "kind": "const",
+            "name": "PLATFORMS",
+            "parent": "",
+            "signature": "PLATFORMS = [Platform.MEDIA_PLAYER]"
+          },
+          {
+            "kind": "const",
+            "name": "DATA_HASS_CONFIG",
+            "parent": "",
+            "signature": "DATA_HASS_CONFIG = \"hass_config\""
+          },
+          {
+            "kind": "const",
+            "name": "DEFAULT_NAME",
+            "parent": "",
+            "signature": "DEFAULT_NAME = \"LG webOS TV\""
+          },
+          {
+            "kind": "const",
+            "name": "ATTR_BUTTON",
+            "parent": "",
+            "signature": "ATTR_BUTTON = \"button\""
+          },
+          {
+            "kind": "const",
+            "name": "ATTR_PAYLOAD",
+            "parent": "",
+            "signature": "ATTR_PAYLOAD = \"payload\""
+          },
+          {
+            "kind": "const",
+            "name": "ATTR_SOUND_OUTPUT",
+            "parent": "",
+            "signature": "ATTR_SOUND_OUTPUT = \"sound_output\""
+          },
+          {
+            "kind": "const",
+            "name": "CONF_ON_ACTION",
+            "parent": "",
+            "signature": "CONF_ON_ACTION = \"turn_on_action\""
+          },
+          {
+            "kind": "const",
+            "name": "CONF_SOURCES",
+            "parent": "",
+            "signature": "CONF_SOURCES = \"sources\""
+          },
+          {
+            "kind": "const",
+            "name": "SERVICE_BUTTON",
+            "parent": "",
+            "signature": "SERVICE_BUTTON = \"button\""
+          },
+          {
+            "kind": "const",
+            "name": "SERVICE_COMMAND",
+            "parent": "",
+            "signature": "SERVICE_COMMAND = \"command\""
+          },
+          {
+            "kind": "const",
+            "name": "SERVICE_SELECT_SOUND_OUTPUT",
+            "parent": "",
+            "signature": "SERVICE_SELECT_SOUND_OUTPUT = \"select_sound_output\""
+          },
+          {
+            "kind": "const",
+            "name": "LIVE_TV_APP_ID",
+            "parent": "",
+            "signature": "LIVE_TV_APP_ID = \"com.webos.app.livetv\""
+          },
+          {
+            "kind": "const",
+            "name": "WEBOSTV_EXCEPTIONS",
+            "parent": "",
+            "signature": "WEBOSTV_EXCEPTIONS = ("
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/device_trigger.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "TRIGGER_TYPES",
+            "parent": "",
+            "signature": "TRIGGER_TYPES = {TURN_ON_PLATFORM_TYPE}"
+          },
+          {
+            "kind": "const",
+            "name": "TRIGGER_SCHEMA",
+            "parent": "",
+            "signature": "TRIGGER_SCHEMA = DEVICE_TRIGGER_BASE_SCHEMA.extend("
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/diagnostics.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "TO_REDACT",
+            "parent": "",
+            "signature": "TO_REDACT ="
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/helpers.py",
+        "symbols": [
+          {
+            "kind": "function",
+            "name": "async_get_device_id_from_entity_id",
+            "parent": "",
+            "signature": "async_get_device_id_from_entity_id(hass: HomeAssistant, entity_id: str) -> str"
+          },
+          {
+            "kind": "function",
+            "name": "get_sources",
+            "parent": "",
+            "signature": "get_sources(tv_state: WebOsTvState) -> list[str]"
+          },
+          {
+            "kind": "function",
+            "name": "update_client_key",
+            "parent": "",
+            "signature": "update_client_key(hass: HomeAssistant, entry: WebOsTvConfigEntry) -> None"
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/media_player.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "SUPPORT_WEBOSTV",
+            "parent": "",
+            "signature": "SUPPORT_WEBOSTV = ("
+          },
+          {
+            "kind": "const",
+            "name": "SUPPORT_WEBOSTV_VOLUME",
+            "parent": "",
+            "signature": "SUPPORT_WEBOSTV_VOLUME = ("
+          },
+          {
+            "kind": "const",
+            "name": "MIN_TIME_BETWEEN_SCANS",
+            "parent": "",
+            "signature": "MIN_TIME_BETWEEN_SCANS = timedelta(seconds=10)"
+          },
+          {
+            "kind": "const",
+            "name": "MIN_TIME_BETWEEN_FORCED_SCANS",
+            "parent": "",
+            "signature": "MIN_TIME_BETWEEN_FORCED_SCANS = timedelta(seconds=1)"
+          },
+          {
+            "kind": "const",
+            "name": "PARALLEL_UPDATES",
+            "parent": "",
+            "signature": "PARALLEL_UPDATES = 0"
+          },
+          {
+            "kind": "const",
+            "name": "SCAN_INTERVAL",
+            "parent": "",
+            "signature": "SCAN_INTERVAL = timedelta(seconds=10)"
+          },
+          {
+            "kind": "const",
+            "name": "BUTTON_SCHEMA",
+            "parent": "",
+            "signature": "BUTTON_SCHEMA: VolDictType = {vol.Required(ATTR_BUTTON): cv.string}"
+          },
+          {
+            "kind": "const",
+            "name": "COMMAND_SCHEMA",
+            "parent": "",
+            "signature": "COMMAND_SCHEMA: VolDictType ="
+          },
+          {
+            "kind": "const",
+            "name": "SOUND_OUTPUT_SCHEMA",
+            "parent": "",
+            "signature": "SOUND_OUTPUT_SCHEMA: VolDictType = {vol.Required(ATTR_SOUND_OUTPUT): cv.string}"
+          },
+          {
+            "kind": "const",
+            "name": "SERVICES",
+            "parent": "",
+            "signature": "SERVICES = ("
+          },
+          {
+            "kind": "class",
+            "name": "LgWebOSMediaPlayerEntity",
+            "parent": "",
+            "signature": "class LgWebOSMediaPlayerEntity(RestoreEntity, MediaPlayerEntity)"
+          },
+          {
+            "kind": "function",
+            "name": "async_added_to_hass",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_added_to_hass(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_will_remove_from_hass",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_will_remove_from_hass(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_handle_state_update",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_handle_state_update(self, tv_state: WebOsTvState) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_update",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_update(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "supported_features",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "supported_features(self) -> MediaPlayerEntityFeature"
+          },
+          {
+            "kind": "function",
+            "name": "async_turn_off",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_turn_off(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_turn_on",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_turn_on(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_volume_up",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_volume_up(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_volume_down",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_volume_down(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_set_volume_level",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_set_volume_level(self, volume: float) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_mute_volume",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_mute_volume(self, mute: bool) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_select_sound_output",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_select_sound_output(self, sound_output: str) -> ServiceResponse"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_play_pause",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_play_pause(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_select_source",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_select_source(self, source: str) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_play",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_play(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_pause",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_pause(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_stop",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_stop(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_next_track",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_next_track(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_media_previous_track",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_media_previous_track(self) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_button",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_button(self, button: str) -> None"
+          },
+          {
+            "kind": "function",
+            "name": "async_command",
+            "parent": "LgWebOSMediaPlayerEntity",
+            "signature": "async_command(self, command: str, **kwargs: Any) -> ServiceResponse"
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/notify.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "PARALLEL_UPDATES",
+            "parent": "",
+            "signature": "PARALLEL_UPDATES = 0"
+          },
+          {
+            "kind": "class",
+            "name": "LgWebOSNotificationService",
+            "parent": "",
+            "signature": "class LgWebOSNotificationService(BaseNotificationService)"
+          },
+          {
+            "kind": "function",
+            "name": "async_send_message",
+            "parent": "LgWebOSNotificationService",
+            "signature": "async_send_message(self, message: str = \"\", **kwargs: Any) -> None"
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/trigger.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "TRIGGERS",
+            "parent": "",
+            "signature": "TRIGGERS ="
+          }
+        ]
+      },
+      {
+        "path": "custom_components/webostv_classic/triggers/turn_on.py",
+        "symbols": [
+          {
+            "kind": "const",
+            "name": "PLATFORM_TYPE",
+            "parent": "",
+            "signature": "PLATFORM_TYPE = f\"{DOMAIN}.{__name__.rsplit('.', maxsplit=1)[-1]}\""
+          },
+          {
+            "kind": "const",
+            "name": "TRIGGER_TYPE_TURN_ON",
+            "parent": "",
+            "signature": "TRIGGER_TYPE_TURN_ON = \"turn_on\""
+          },
+          {
+            "kind": "const",
+            "name": "TRIGGER_SCHEMA",
+            "parent": "",
+            "signature": "TRIGGER_SCHEMA = vol.All("
+          },
+          {
+            "kind": "function",
+            "name": "async_get_turn_on_trigger",
+            "parent": "",
+            "signature": "async_get_turn_on_trigger(device_id: str) -> dict[str, str]"
+          },
+          {
+            "kind": "function",
+            "name": "async_remove",
+            "parent": "",
+            "signature": "async_remove() -> None"
+          }
+        ]
+      }
+    ]
+  },
+  "tests": [],
+  "operations": [
+    ".github/workflows/release.yml",
+    ".github/workflows/validate.yml"
+  ],
+  "limitations": {
+    "unparsed_languages": [],
+    "excluded_dirs": [],
+    "code_map_truncated": false,
+    "code_map_symbols_capped": true,
+    "tracked_files_only": true
+  },
+  "generated": {
+    "source_commit": "495aa7100199d4a51f66681984041afce7a3d608",
+    "content_hash": "e8ca2a5b30b9ef75",
+    "generator": "navgen"
+  }
+}
