@@ -5,5 +5,5 @@
   "filename": "ha_lg_webostv_classic.zip",
   "render_readme": true,
   "hide_default_branch": false,
-  "homeassistant": "2023.1.0"
+  "homeassistant": "2025.8.0"
 }
