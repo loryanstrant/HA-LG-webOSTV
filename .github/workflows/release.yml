@@ -1,9 +1,13 @@
 name: "Release"
 
 on:
+  push:
+    tags:
+      - "v*"
   release:
     types:
       - published
+
 permissions:
   contents: write
   packages: write
@@ -17,12 +21,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify tag matches manifest version
+        if: github.event_name == 'push'
+        run: |
+          manifest_version="$(jq -r .version custom_components/webostv_classic/manifest.json)"
+          if [ "${GITHUB_REF_NAME}" != "v${manifest_version}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match manifest.json version ${manifest_version} (expected v${manifest_version})"
+            exit 1
+          fi
+          echo "Tag ${GITHUB_REF_NAME} matches manifest.json version ${manifest_version}"
+
       - name: Create zip file
         run: |
           cd custom_components/webostv_classic
           zip -r ../../ha_lg_webostv_classic.zip . -x "__pycache__/*" "*.pyc" "*.pyo"
 
+      - name: Create release and attach zip
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" ha_lg_webostv_classic.zip --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" ha_lg_webostv_classic.zip \
+              --title "${GITHUB_REF_NAME}" \
+              --generate-notes
+          fi
+
       - name: Upload zip to release
+        if: github.event_name == 'release'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
