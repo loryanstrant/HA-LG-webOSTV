@@ -20,6 +20,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history + tags: the notes are built from the commits since the
+          # previous tag, because this repo's pull requests live on Gitea and
+          # GitHub's own --generate-notes has no PRs here to summarise.
+          # fetch-tags is redundant with fetch-depth: 0 but stated explicitly —
+          # without the tags, `git describe` below silently finds no previous
+          # tag and the notes would list the whole history instead of the diff.
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Verify tag matches manifest version
         if: github.event_name == 'push'
@@ -30,6 +39,27 @@ jobs:
             exit 1
           fi
           echo "Tag ${GITHUB_REF_NAME} matches manifest.json version ${manifest_version}"
+
+      - name: Build release notes from commits
+        if: github.event_name == 'push'
+        run: |
+          previous_tag="$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)"
+          if [ -z "${previous_tag}" ]; then
+            echo "::warning::No previous tag found before ${GITHUB_REF_NAME}; the notes will list the whole history. Correct for a first release, otherwise the tags were not fetched."
+          fi
+          {
+            echo "## Changes"
+            echo
+            if [ -n "${previous_tag}" ]; then
+              git log --no-merges --pretty='- %s' "${previous_tag}..${GITHUB_REF_NAME}"
+              echo
+              echo "**Full Changelog**: https://github.com/${GITHUB_REPOSITORY}/compare/${previous_tag}...${GITHUB_REF_NAME}"
+            else
+              git log --no-merges --pretty='- %s' "${GITHUB_REF_NAME}"
+            fi
+          } > RELEASE_NOTES.md
+          echo "--- release notes ---"
+          cat RELEASE_NOTES.md
 
       - name: Create zip file
         run: |
@@ -46,7 +76,7 @@ jobs:
           else
             gh release create "${GITHUB_REF_NAME}" ha_lg_webostv_classic.zip \
               --title "${GITHUB_REF_NAME}" \
-              --generate-notes
+              --notes-file RELEASE_NOTES.md
           fi
 
       - name: Upload zip to release
